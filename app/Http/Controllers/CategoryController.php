@@ -2,25 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use App\Services\CategoryService;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    public function __construct(private readonly CategoryService $categoryService){}
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return CategoryResource::collection(Category::withCount('recipes')->paginate(20));
     }
 
     /**
@@ -35,14 +31,6 @@ class CategoryController extends Controller
      * Display the specified resource.
      */
     public function show(Category $category)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Category $category)
     {
         //
     }
