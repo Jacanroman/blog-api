@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Category\StoreCategoryRequest;
+use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use App\Services\CategoryService;
@@ -33,17 +34,23 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Category $category)
+    public function show(string $id)
     {
-        //
+        $category = Category::where('id',$id)->firstOrFail();
+
+        return new CategoryResource(($category));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(UpdateCategoryRequest $request, string $id)
     {
-        //
+        $category=Category::where('id',$id)->firstOrFail();
+
+        $student = $this->categoryService->update($category,$request->all());
+
+        return new CategoryResource($student);
     }
 
     /**

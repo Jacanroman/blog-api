@@ -18,9 +18,10 @@ Route::prefix('auth')->group(function () {
 
 //Public routes
 Route::get('/categories',[CategoryController::class, 'index']);
+Route::get('/categories/{category}',[CategoryController::class, 'show']);
 
 //Admin routes
-Route::middleware(['auth:sanctum','role:admin'])->prefix('admin')->group(function(){
+Route::middleware(['auth:sanctum','role:admin'])->group(function(){
 
     //Dashboard
     Route::get('/dashboard',[DashboardController::class, 'index']);
