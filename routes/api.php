@@ -5,8 +5,8 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RecipeController;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
@@ -29,6 +29,11 @@ Route::post('/comments', [CommentController::class, 'store']);
 
 Route::get('/recipes',[RecipeController::class,'index']);
 Route::get('/recipes/{slug}',[RecipeController::class,'show']);
+
+Route::get('/users',[UserController::class, 'index']);
+Route::get('/users/{user}',[UserController::class,'show']);
+
+Route::get('/tags',[TagController::class,'index']);
 
 //Admin routes
 Route::middleware(['auth:sanctum','role:admin'])->group(function(){
@@ -55,10 +60,13 @@ Route::middleware(['auth:sanctum','role:admin'])->group(function(){
     Route::delete('/recipes/{recipe}',[RecipeController::class,'delete']);
 
     //Users
-    Route::get('/users',[UserController::class, 'index']);
-    Route::get('/users/{user}',[UserController::class,'show']);
+   
     Route::post('/users',[UserController::class, 'store']);
     Route::patch('/users/{user}',[UserController::class,'update']);
+
+    //Tags
+    Route::post('/tags',[TagController::class,'store']);
+    Route::delete('/tags/{tag}',[TagController::class,'destroy']);
     
 
 });
